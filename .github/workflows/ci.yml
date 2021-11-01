@@ -1,0 +1,23 @@
+name: YAML Lint / Deploy
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  push:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Deploy Changes
+        if: ${{ github.event_name == 'push' }}
+        env:
+          COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
+        run: |
+          echo ${{ github.event.commits[0].message }}
+          echo ${{ github.event.head_commit.message }}
